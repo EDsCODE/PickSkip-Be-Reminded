@@ -80,31 +80,6 @@ class PhoneNumberVerificationViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    
-    ///Upon login, check firebase under ghost users to see if the user receieved any snaps before they registered. If so, move them under their corresponding account on the database
-    func checkGhost() {
-        if let number = Auth.auth().currentUser?.phoneNumber {
-            DataService.instance.mainRef.child("ghostusers").child(number).observeSingleEvent(of: .value, with: { (snapshot) in
-                let value = snapshot.value as? [AnyHashable : Any]
-                if let ghostMedia = value {
-                    DataService.instance.usersRef.child(number).child("media").updateChildValues(ghostMedia)
-                    DataService.instance.mainRef.child("ghostusers").child(number).removeValue()
-                }
-            })
-
-        } else {
-            Auth.auth().currentUser?.reload(completion: { (err) in
-                if let error = err {
-                    print("Error in PhoneNumberViewController#checkGhost: \(error)")
-                    return
-                }
-                else {
-                    self.checkGhost()
-                }
-            })
-        }
-    }
-    
     /*
     // MARK: - Navigation
 

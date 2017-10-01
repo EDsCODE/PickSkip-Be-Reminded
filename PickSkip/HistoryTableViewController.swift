@@ -12,6 +12,7 @@ import QuartzCore
 import AVFoundation
 import PhoneNumberKit
 import Photos
+import Kingfisher
 
 class HistoryTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 

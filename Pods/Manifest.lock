@@ -55,6 +55,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.11)
+  - Kingfisher (4.1.0)
   - leveldb-library (1.18.3)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -79,6 +80,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Messaging
   - Firebase/Storage
+  - Kingfisher (~> 4.0)
   - PhoneNumberKit
   - Sparrow/Modules/RequestPermission (from `https://github.com/IvanVorobei/Sparrow.git`)
   - TokenField (~> 0.1.2)
@@ -103,6 +105,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 661fc1f8d4131891d256b62e82a45ace8b3f0c3b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
+  Kingfisher: f14df8cbe576bf55f211fa589e9869bceb4ea87d
   leveldb-library: 10fb39c39e243db4af1828441162405bbcec1404
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   PhoneNumberKit: 08aaf1968ea41a114327e9223cbb0391d76ae145
@@ -110,6 +113,6 @@ SPEC CHECKSUMS:
   Sparrow: 86b8f0d7598dc52ff2b06bb1df05feb297d1821f
   TokenField: a38b4177b36bd2c75ad08d2112288c257bffeedb
 
-PODFILE CHECKSUM: fcc47222f2ae1ee54a5f5e3a3d5b147261766078
+PODFILE CHECKSUM: 964c506f667654b00cd97ca62e0a06b62411ca2a
 
 COCOAPODS: 1.1.1
