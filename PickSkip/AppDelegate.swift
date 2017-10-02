@@ -11,6 +11,8 @@ import CoreData
 import Contacts
 import UserNotifications
 import Firebase
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -22,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         
         //Firebase setup
+        Fabric.with([Crashlytics.self])
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
         UINavigationBar.appearance().tintColor = Constants.defaultBlueColor

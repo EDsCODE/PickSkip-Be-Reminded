@@ -11,6 +11,8 @@
 		1A435C741F1ECFE1007E5478 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A435C731F1ECFE1007E5478 /* DataService.swift */; };
 		1A46FE1F1F2FCB000096A0EF /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A46FE1E1F2FCB000096A0EF /* ContactsViewController.swift */; };
 		1A5C7B091F33D27300615EDD /* OpenedMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5C7B081F33D27300615EDD /* OpenedMediaCell.swift */; };
+		1A5D66501F81E10F0019DB58 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5D664E1F81E10F0019DB58 /* Fabric.framework */; };
+		1A5D66511F81E10F0019DB58 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5D664F1F81E10F0019DB58 /* Crashlytics.framework */; };
 		1A63642E1F3FF42D00B1D844 /* Raleway-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AABB3A91F301B700092B639 /* Raleway-ExtraBold.ttf */; };
 		1A63642F1F3FF44D00B1D844 /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AABB3A71F301B700092B639 /* Raleway-Bold.ttf */; };
 		1A6364301F3FF4A700B1D844 /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AABB3B11F301B700092B639 /* Raleway-SemiBold.ttf */; };
@@ -65,6 +67,8 @@
 		1A435C731F1ECFE1007E5478 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		1A46FE1E1F2FCB000096A0EF /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		1A5C7B081F33D27300615EDD /* OpenedMediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenedMediaCell.swift; sourceTree = "<group>"; };
+		1A5D664E1F81E10F0019DB58 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		1A5D664F1F81E10F0019DB58 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		1AA23D801F3253ED006A630D /* UnopenedMediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnopenedMediaCell.swift; sourceTree = "<group>"; };
 		1AA4851E1F49FBB50045B70C /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1AA485201F4D120E0045B70C /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5E4CAE28826422624621697 /* Pods_PickSkip.framework in Frameworks */,
+				1A5D66511F81E10F0019DB58 /* Crashlytics.framework in Frameworks */,
+				1A5D66501F81E10F0019DB58 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +242,8 @@
 				27C7D9A41F14805800A5737F /* LaunchScreen.storyboard */,
 				27C7D9A71F14805800A5737F /* Info.plist */,
 				27C7D99F1F14805800A5737F /* PickSkip.xcdatamodeld */,
+				1A5D664E1F81E10F0019DB58 /* Fabric.framework */,
+				1A5D664F1F81E10F0019DB58 /* Crashlytics.framework */,
 			);
 			path = PickSkip;
 			sourceTree = "<group>";
@@ -302,6 +310,7 @@
 				27C7D9931F14805800A5737F /* Resources */,
 				222906C7177B321A59850E21 /* [CP] Embed Pods Frameworks */,
 				0F969C70F5609445D5DD98D7 /* [CP] Copy Pods Resources */,
+				1A113FCD1F81E086008D1F2F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -420,6 +429,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PickSkip/Pods-PickSkip-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		1A113FCD1F81E086008D1F2F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run f538712e68b95742cd789ff5b227aa80d5a3f8af 6274ed7f6f9ca521ee7fe01eed992184be92a82291c0e65d0d57416e3219b536";
 		};
 		222906C7177B321A59850E21 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -607,6 +629,10 @@
 				CODE_SIGN_ENTITLEMENTS = PickSkip/PickSkip.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = S59K556BAM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PickSkip",
+				);
 				INFOPLIST_FILE = PickSkip/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -625,6 +651,10 @@
 				CODE_SIGN_ENTITLEMENTS = PickSkip/PickSkip.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = S59K556BAM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PickSkip",
+				);
 				INFOPLIST_FILE = PickSkip/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
