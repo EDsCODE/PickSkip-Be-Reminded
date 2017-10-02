@@ -18,26 +18,28 @@ class Media {
     var video: AVPlayer?
     var releaseDate: Date!
     var sentDate: Date!
-    var url: StorageReference!
+    var url: URL!
     var thumbnailRef: StorageReference!
     var loadState: LoadState = .unloaded
     var key: String!
     var openDate: Int!
     
-    init(senderNumber: String, key: String, type: String, releaseDateInt: Int!, sentDateInt: Int!, url: StorageReference!, openDate: Int) {
+    init(senderNumber: String, key: String, type: String, releaseDateInt: Int!, sentDateInt: Int!, url: String!, openDate: Int) {
         self.senderNumber = senderNumber
         self.mediaType = type
-        self.url = url
+        let tempUrl = URL(string: url)
+        self.url = tempUrl
         self.key = key
         releaseDate = Date(timeIntervalSince1970: TimeInterval(releaseDateInt))
         sentDate = Date(timeIntervalSince1970: TimeInterval(sentDateInt))
         self.openDate = openDate
     }
     
-    init(senderNumber: String, key: String, type: String, releaseDateInt: Int!, sentDateInt: Int!, url: StorageReference!, openDate: Int, thumbnailReference: StorageReference!) {
+    init(senderNumber: String, key: String, type: String, releaseDateInt: Int!, sentDateInt: Int!, url: String!, openDate: Int, thumbnailReference: StorageReference!) {
         self.senderNumber = senderNumber
         self.mediaType = type
-        self.url = url
+        let tempURL = URL(string: url)
+        self.url = tempURL
         self.key = key
         self.thumbnailRef = thumbnailReference
         releaseDate = Date(timeIntervalSince1970: TimeInterval(releaseDateInt))
@@ -59,9 +61,11 @@ class Media {
 //        })
 //    }
     
+    
     func load(completion: @escaping () -> Void) {
         self.loadState = .loading
-        url.getData(maxSize: Constants.maxDownloadSize, completion: {(data, error) in
+        let _url = Storage.storage().reference(forURL: url.absoluteString)
+        _url.getData(maxSize: Constants.maxDownloadSize, completion: {(data, error) in
             if let error = error {
                 print("Error loading image from Media#load: \(error.localizedDescription)")
             } else if self.mediaType == "image" {

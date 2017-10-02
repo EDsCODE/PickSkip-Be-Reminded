@@ -12,7 +12,7 @@ import QuartzCore
 import AVFoundation
 import PhoneNumberKit
 import Photos
-import Kingfisher
+
 
 class HistoryTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -117,7 +117,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }
             
-            let httpsReference = Storage.storage().reference(forURL: snapshot.childSnapshot(forPath: "mediaURL").value as! String)
+            let httpsReference = snapshot.childSnapshot(forPath: "mediaURL").value as! String
             
             let mediaInstance = Media(senderNumber: snapshot.childSnapshot(forPath: "senderNumber").value as! String,
                                       key: snapshot.key,
@@ -163,7 +163,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
             }
             
             
-            let httpsReference = Storage.storage().reference(forURL: snapshot.childSnapshot(forPath: "mediaURL").value as! String)
+            let httpsReference =  snapshot.childSnapshot(forPath: "mediaURL").value as! String
             let thumbnailReference = Storage.storage().reference(forURL: snapshot.childSnapshot(forPath: "thumbnail").value as! String)
             
             let mediaInstance = Media(senderNumber: snapshot.childSnapshot(forPath: "senderNumber").value as! String,
@@ -209,7 +209,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }
             
-            let httpsReference = Storage.storage().reference(forURL: snapshot.childSnapshot(forPath: "mediaURL").value as! String)
+            let httpsReference = snapshot.childSnapshot(forPath: "mediaURL").value as! String
             
             let mediaInstance = Media(senderNumber: snapshot.childSnapshot(forPath: "senderNumber").value as! String,
                                       key: snapshot.key,
@@ -293,7 +293,8 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
         let confirmAction = UIAlertAction(title: "Confirm", style: .default, handler: {
             (action) in
             if let indexPath = indexPath {
-                DataService.instance.remove(key: self.openedMediaArray[indexPath.row].key, thumbnailRef: self.openedMediaArray[indexPath.row].thumbnailRef, mediaRef: self.openedMediaArray[indexPath.row].url)
+                
+                DataService.instance.remove(key: self.openedMediaArray[indexPath.row].key, thumbnailRef: self.openedMediaArray[indexPath.row].thumbnailRef, mediaRef: Storage.storage().reference(forURL: self.openedMediaArray[indexPath.row].url.absoluteString))
                 self.openedMediaArray.remove(at: indexPath.row)
             }
             
@@ -395,12 +396,14 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
             
             //Format cell appearance based on state
             if cell.media.loadState == .loaded {
+                cell.thumbnailSpinner.layer.strokeColor = UIColor.black.cgColor
                 cell.cancelAnimation()
             } else if cell.media.loadState == .loading{
                 cell.loadAnimation()
             } else {
                 cell.dateLabel.textColor = UIColor(colorLiteralRed: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
                 cell.nameLabel.textColor = UIColor(colorLiteralRed: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+                cell.thumbnailSpinner.layer.strokeColor = UIColor(colorLiteralRed: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0).cgColor
             }
             
             return cell
@@ -441,26 +444,33 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
         
         if indexPath.section == 0 {
             let cell = self.tableView.cellForRow(at: indexPath) as! OpenedMediaCell
-            if cell.media.loadState == .loaded {
-                
+//            if cell.media.loadState == .loaded {
+            
                 if cell.media.mediaType == "image" {
-                    let image = UIImage(data: openedMediaArray[indexPath.row].image!)
-                    mediaView.displayImage(image!)
+                    //mediaView.displayURL(openedMediaArray[indexPath.row].url)
+                    mediaView.kf.setImage(with: openedMediaArray[indexPath.row].url ,progressBlock: {
+                        _ in
+                        cell.loadAnimation()
+                    }, completionHandler: { _ in
+                        cell.cancelAnimation()
+                        self.showMedia()
+                        self.mediaDateLabel.text = "Sent " + Util.formatDateLabelDate(date: cell.media.sentDate, split: false)
+                        cell.media.loadState = .loaded
+                    })
                 } else {
-                    mediaView.displayVideo(openedMediaArray[indexPath.row].video!)
+                    if cell.media.loadState == .loaded {
+                        mediaView.displayVideo(openedMediaArray[indexPath.row].video!)
+                        self.showMedia()
+                        self.mediaDateLabel.text = "Sent " + Util.formatDateLabelDate(date: cell.media.sentDate, split: false)
+                    } else if cell.media.loadState == .unloaded {
+                        cell.media.load() {
+                        //CODE TO EXECUTE WHEN DONE LOADING
+                            cell.cancelAnimation()
+                        }
+                        //CODE TO EXECUTE WHILE LOADING
+                            cell.loadAnimation()
+                        }
                 }
-                
-                showMedia()
-                mediaDateLabel.text = "Sent " + Util.formatDateLabelDate(date: cell.media.sentDate, split: false)
-                
-            } else if cell.media.loadState == .unloaded {
-                cell.media.load() {
-                    //CODE TO EXECUTE WHEN DONE LOADING
-                    cell.cancelAnimation()
-                }
-                //CODE TO EXECUTE WHILE LOADING
-                cell.loadAnimation()
-            }
         } else {
             
             let cell = self.tableView.cellForRow(at: indexPath) as! UnopenedMediaCell

@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Kingfisher
 
 class PreviewView: UIImageView {
 
@@ -30,6 +31,12 @@ class PreviewView: UIImageView {
     func displayImage(_ image: UIImage) {
         removeExistingContent()
         self.image = image
+    }
+    
+    //Accepts URL and displays URL using kingfisher to cache image
+    func displayURL(_ url: URL){
+        removeExistingContent()
+        self.kf.setImage(with: url)
     }
     
     ///Plays the video and set up a notification that will play the video again when completed.
