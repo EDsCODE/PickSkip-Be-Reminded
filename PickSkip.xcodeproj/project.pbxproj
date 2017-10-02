@@ -173,7 +173,17 @@
 		1A8F32001F2EAAFA00036108 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1A5D664E1F81E10F0019DB58 /* Fabric.framework */,
+				1A5D664F1F81E10F0019DB58 /* Crashlytics.framework */,
+				1AD78E331F8273530085BA04 /* Fonts */,
 				1A5D66521F81E77C0019DB58 /* Settings.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1AD78E331F8273530085BA04 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
 				1AD2691D1F18462E003C438B /* Raleway-Light.ttf */,
 				1ADFF82F1F2ECBD9003C2935 /* Raleway-Medium.ttf */,
 				1AABB3A51F301B700092B639 /* Raleway-Black.ttf */,
@@ -208,7 +218,7 @@
 				1ADFF8391F2ECC9A003C2935 /* Lato-LightItalic.ttf */,
 				1ADFF83A1F2ECC9A003C2935 /* Lato-Regular.ttf */,
 			);
-			name = Resources;
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		27C7D98C1F14805800A5737F = {
@@ -245,8 +255,6 @@
 				27C7D9A41F14805800A5737F /* LaunchScreen.storyboard */,
 				27C7D9A71F14805800A5737F /* Info.plist */,
 				27C7D99F1F14805800A5737F /* PickSkip.xcdatamodeld */,
-				1A5D664E1F81E10F0019DB58 /* Fabric.framework */,
-				1A5D664F1F81E10F0019DB58 /* Crashlytics.framework */,
 			);
 			path = PickSkip;
 			sourceTree = "<group>";
@@ -636,6 +644,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PickSkip",
+					"$(PROJECT_DIR)/PickSkip/Settings.bundle",
 				);
 				INFOPLIST_FILE = PickSkip/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -658,6 +667,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PickSkip",
+					"$(PROJECT_DIR)/PickSkip/Settings.bundle",
 				);
 				INFOPLIST_FILE = PickSkip/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

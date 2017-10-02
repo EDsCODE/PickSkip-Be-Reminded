@@ -1,6 +1,3 @@
-name: Carte, nameSpecified: 
-body: The MIT License (MIT…
-
 name: Firebase, nameSpecified: 
 body: Copyright 2017 Googl…
 

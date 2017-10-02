@@ -8,6 +8,14 @@
 	<array>
 		<dict>
 			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Icons made by EpicCodes and Gregor Cresnar from www.flaticon.com</string>
+			<key>Key</key>
+			<string>Icons made by EpicCodes and Gregor Cresnar from www.flaticon.com</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
 			<string>Licenses</string>

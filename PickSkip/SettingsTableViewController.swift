@@ -15,6 +15,8 @@ class SettingsTableViewController: UITableViewController {
     let moreInfo = ["Terms of Use", "Privacy Policy", "Support"]
     var webAddress: String!
 
+    let label = UITextView(frame: CGRect(x: 15, y: 0, width: 100, height: 20))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -122,7 +124,6 @@ class SettingsTableViewController: UITableViewController {
         
         tableView.deselectRow(at: indexPath, animated: false)
     }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showWebView" {
             let vc = segue.destination as! WebViewController
@@ -181,4 +182,17 @@ class SettingsTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension NSMutableAttributedString {
+    
+    public func setAsLink(textToFind:String, linkURL:String) -> Bool {
+        
+        let foundRange = self.mutableString.range(of: textToFind)
+        if foundRange.location != NSNotFound {
+            self.addAttribute(NSLinkAttributeName, value: linkURL, range: foundRange)
+            return true
+        }
+        return false
+    }
 }
