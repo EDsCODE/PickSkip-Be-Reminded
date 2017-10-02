@@ -1,0 +1,63 @@
+name: Carte, nameSpecified: 
+body: The MIT License (MIT…
+
+name: Firebase, nameSpecified: 
+body: Copyright 2017 Googl…
+
+name: FirebaseAnalytics, nameSpecified: 
+body: Copyright 2017 Googl…
+
+name: FirebaseAuth, nameSpecified: 
+body: Copyright 2017 Googl…
+
+name: FirebaseCore, nameSpecified: 
+body: Copyright 2017 Googl…
+
+name: FirebaseDatabase, nameSpecified: 
+body: Copyright 2017 Googl…
+
+name: FirebaseInstanceID, nameSpecified: 
+body: Copyright 2017 Googl…
+
+name: FirebaseMessaging, nameSpecified: 
+body: Copyright 2017 Googl…
+
+name: FirebaseStorage, nameSpecified: 
+body: Copyright 2017 Googl…
+
+name: GTMSessionFetcher, nameSpecified: 
+body: 
+                   …
+
+name: GoogleToolboxForMac, nameSpecified: 
+body: 
+                   …
+
+name: Kingfisher, nameSpecified: 
+body: The MIT License (MIT…
+
+name: PhoneNumberKit, nameSpecified: 
+body: The MIT License (MIT…
+
+name: Protobuf, nameSpecified: 
+body: This license applies…
+
+name: Sparrow, nameSpecified: 
+body: MIT License
+
+Copyrig…
+
+name: TokenField, nameSpecified: 
+body: MIT License
+
+Copyrig…
+
+name: leveldb-library, nameSpecified: 
+body: Copyright (c) 2011 T…
+
+name: nanopb, nameSpecified: 
+body: Copyright (c) 2011 P…
+
+add-version-numbers: false
+
+LicensePlist Version: 1.4.5
