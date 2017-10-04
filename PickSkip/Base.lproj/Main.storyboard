@@ -933,11 +933,11 @@
         <image name="NewBlueLogoTitle" width="268" height="67"/>
         <image name="PickSkipColoredArrows" width="200" height="67"/>
         <image name="backButton2" width="115" height="199"/>
-        <image name="cameraButton" width="64" height="64"/>
+        <image name="cameraButton" width="137" height="96"/>
         <image name="cancelButton5" width="368" height="368"/>
         <image name="downloadMedia" width="381" height="354"/>
-        <image name="flipCamera" width="497" height="380"/>
+        <image name="flipCamera" width="127" height="92"/>
         <image name="hamburger" width="325" height="228"/>
-        <image name="settings" width="64" height="64"/>
+        <image name="settings" width="142" height="145"/>
     </resources>
 </document>

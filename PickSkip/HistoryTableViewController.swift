@@ -43,6 +43,9 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
 
         Util.loadContacts()
         
+//        for contact in Constants.contacts {
+//            print(contact.firstName! + contact.lastName! + "'s number: " + contact.phoneNumber!)
+//        }
         
         mediaDateLabel.adjustsFontSizeToFitWidth = true
         mediaDateLabel.layer.cornerRadius = 10
@@ -85,14 +88,6 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.separatorColor = .clear
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if initialFetch == false {
-            if self.tableView.numberOfSections == 2 {
-                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .middle, animated: true)
-            }
-            
-        }
-    }
     
     func loadContent() {
         
@@ -307,19 +302,15 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
     
     //Gets the name of contact correpsonding to number if possible
     func getCorrespondingName(of number: String) -> String {
+        
         if number == Auth.auth().currentUser?.providerData[0].phoneNumber! {
             return "Me"
         } else {
             for contact in Constants.contacts {
-                do {
-                    let phoneNumber = try phoneNumberKit.parse(contact.phoneNumber!)
-                    let parsedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
-                    if number == parsedNumber {
-                        return contact.firstName! + " " + contact.lastName!
-                    }
-                } catch {
-                    print("error trying to parse phone number")
+                if number == contact.phoneNumber! {
+                    return contact.firstName! + " " + contact.lastName!
                 }
+                
             }
             return number
         }

@@ -10,6 +10,7 @@ import Foundation
 import Contacts
 import Firebase
 import AVFoundation
+import PhoneNumberKit
 
 class Util {
     
@@ -41,36 +42,37 @@ class Util {
     
     static func loadContacts() {
         //load Contacts
+        
         Constants.contacts.removeAll()
         let store = CNContactStore()
-        let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactOrganizationNameKey]
+        let phoneNumberKit = PhoneNumberKit()
         
-        var allContainers : [CNContainer] = []
-        do {
-            allContainers = try store.containers(matching: nil)
-        } catch {
-            print("Error fetching containers from ComposeViewController#loadContacts: \(error)")
-        }
-        
-        for container in allContainers {
-            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
-            
-            do {
-                let containerResults = try store.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as [CNKeyDescriptor])
-                for contact in containerResults {
-                    if !contact.phoneNumbers.isEmpty {
-                        for number in contact.phoneNumbers {
-                            let tempContact = Contact(first: contact.givenName, last: contact.familyName, number: number.value.stringValue)
+        let req = CNContactFetchRequest(keysToFetch: [
+            CNContactFamilyNameKey as CNKeyDescriptor,
+            CNContactGivenNameKey as CNKeyDescriptor,
+            CNContactPhoneNumbersKey as CNKeyDescriptor,
+            CNContactOrganizationNameKey as CNKeyDescriptor
+            ])
+
+            try! store.enumerateContacts(with: req) {
+                contact, stop in
+                if !contact.phoneNumbers.isEmpty {
+                    for number in contact.phoneNumbers {
+                        
+                        do {
+                            let phoneNumber = try phoneNumberKit.parse(number.value.stringValue)
+                            let parsedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
+                            let tempContact = Contact(first: contact.givenName, last: contact.familyName, number: parsedNumber)
                             Constants.contacts.append(tempContact)
+                        } catch {
+                            print("Error parsing phone number: \(error)")
                         }
                         
                     }
                 }
                 
-            } catch {
-                print("Error fetching results for container from ComposeViewController#loadContacts: \(error)")
             }
-        }
+        
     }
     
     //Return the mobile number of the contact
