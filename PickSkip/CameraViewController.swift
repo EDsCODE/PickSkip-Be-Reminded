@@ -22,6 +22,8 @@ class CameraViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         feedButton.imageView?.contentMode = .scaleAspectFit
         //Set up Camera View

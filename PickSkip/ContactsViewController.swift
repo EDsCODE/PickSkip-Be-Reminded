@@ -10,7 +10,6 @@ import UIKit
 import TokenField
 import Contacts
 import Firebase
-import PhoneNumberKit
 
 
 class ContactsViewController: UIViewController {
@@ -47,13 +46,12 @@ class ContactsViewController: UIViewController {
     var releaseDate: Date!
     var image: Data?
     var video: URL?
-    let phoneNumberKit = PhoneNumberKit()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //get contacts
-        Util.loadContacts()
+        Util.loadContacts(completion:nil)
         
         contactTableView.delegate = self
         contactTableView.dataSource = self
@@ -183,12 +181,8 @@ class ContactsViewController: UIViewController {
     func sendContent(gesture: UITapGestureRecognizer) {
         var recipients: [String] = []
         for selectedContact in selectedContacts {
-            do {
-                let phoneNumber = try phoneNumberKit.parse(selectedContact.phoneNumber!)
-                let parsedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
-                recipients.append(parsedNumber)
-            } catch {
-                print("error trying to parse phone number")
+            if let phoneNumeber = selectedContact.phoneNumber {
+                recipients.append(phoneNumeber)
             }
             
         }

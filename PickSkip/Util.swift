@@ -40,7 +40,7 @@ class Util {
         }
     }
     
-    static func loadContacts() {
+    static func loadContacts(completion: (()->())?) {
         //load Contacts
         
         Constants.contacts.removeAll()
@@ -72,6 +72,10 @@ class Util {
                 }
                 
             }
+        if let completion = completion {
+          completion()  
+        }
+        
         
     }
     

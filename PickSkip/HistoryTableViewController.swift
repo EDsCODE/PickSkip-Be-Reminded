@@ -40,9 +40,11 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        Util.loadContacts()
-        
+        DispatchQueue.global(qos: .userInteractive).async {
+            Util.loadContacts(){
+                self.tableView.reloadData()
+            }
+        }
 //        for contact in Constants.contacts {
 //            print(contact.firstName! + contact.lastName! + "'s number: " + contact.phoneNumber!)
 //        }
@@ -438,11 +440,8 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
 //            if cell.media.loadState == .loaded {
             
                 if cell.media.mediaType == "image" {
-                    //mediaView.displayURL(openedMediaArray[indexPath.row].url)
-                    mediaView.kf.setImage(with: openedMediaArray[indexPath.row].url ,progressBlock: {
-                        _ in
-                        cell.loadAnimation()
-                    }, completionHandler: { _ in
+                    cell.loadAnimation()
+                    mediaView.kf.setImage(with: openedMediaArray[indexPath.row].url ,completionHandler: { _ in
                         cell.cancelAnimation()
                         self.showMedia()
                         self.mediaDateLabel.text = "Sent " + Util.formatDateLabelDate(date: cell.media.sentDate, split: false)
