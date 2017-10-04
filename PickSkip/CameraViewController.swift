@@ -23,7 +23,9 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        DispatchQueue.global(qos: .userInteractive).async {
+            Util.loadContacts(completion: nil)
+        }
 
         feedButton.imageView?.contentMode = .scaleAspectFit
         //Set up Camera View

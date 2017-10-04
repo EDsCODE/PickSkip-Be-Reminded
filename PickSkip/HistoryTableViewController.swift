@@ -40,11 +40,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.global(qos: .userInteractive).async {
-            Util.loadContacts(){
-                self.tableView.reloadData()
-            }
-        }
+        
 //        for contact in Constants.contacts {
 //            print(contact.firstName! + contact.lastName! + "'s number: " + contact.phoneNumber!)
 //        }
@@ -63,6 +59,11 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
         setupGestures()
         setupLoadMore()
         loadContent()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
     
     func setupGestures() {
