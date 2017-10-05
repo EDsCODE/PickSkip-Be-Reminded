@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 import Firebase
-
+import Contacts
 
 class CameraViewController: UIViewController {
     @IBOutlet weak var cameraView: CameraView!
@@ -19,21 +19,70 @@ class CameraViewController: UIViewController {
     
     var image: UIImage!
     var video: URL!
-
+    var cameraloaded = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.global(qos: .userInteractive).async {
-            Util.loadContacts(completion: nil)
-        }
-
-        feedButton.imageView?.contentMode = .scaleAspectFit
-        //Set up Camera View
-
-        flipCameraButton.imageView?.contentMode = .scaleAspectFit
-        cameraView.delegate = self
-        cameraView.setupCameraView(recordButton)
         
+        
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if(!cameraloaded) {
+            if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized {
+                feedButton.imageView?.contentMode = .scaleAspectFit
+                //Set up Camera View
+                
+                flipCameraButton.imageView?.contentMode = .scaleAspectFit
+                cameraView.delegate = self
+                
+                cameraView.setupCameraView(recordButton)
+                cameraloaded = true
+            } else {
+                AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { (granted: Bool) -> Void in
+                    if granted == true {
+                        self.feedButton.imageView?.contentMode = .scaleAspectFit
+                        //Set up Camera View
+                        
+                        self.flipCameraButton.imageView?.contentMode = .scaleAspectFit
+                        self.cameraView.delegate = self
+                        
+                        self.cameraView.setupCameraView(self.recordButton)
+                        self.cameraloaded = true
+                    } else {
+                        let alert = UIAlertController(title: nil, message: "This app requires access to your camera to proceed. Please open settings and grant permission to camera.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+                            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                        })
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                })
+            }
+        }
+        
+        if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+            DispatchQueue.global(qos: .userInteractive).async {
+                Util.loadContacts(completion: nil)
+            }
+        } else {
+            CNContactStore().requestAccess(for: .contacts) { granted, error in
+                if granted {
+                    DispatchQueue.global(qos: .userInteractive).async {
+                        Util.loadContacts(completion: nil)
+                    }
+                } else {
+                    let alert = UIAlertController(title: nil, message: "This app requires access to your contacts to proceed. Please open settings and grant permission to camera", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+                        UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                    })
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     @IBAction func flipCamera(_ sender: Any) {

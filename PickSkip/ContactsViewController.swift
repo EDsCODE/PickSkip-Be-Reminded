@@ -50,8 +50,6 @@ class ContactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //get contacts
-        Util.loadContacts(completion:nil)
         
         contactTableView.delegate = self
         contactTableView.dataSource = self

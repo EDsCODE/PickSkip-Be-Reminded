@@ -79,6 +79,35 @@ class Util {
         
     }
     
+    static func requestAccessContacts(completionHandler: @escaping () -> Void) {
+        switch CNContactStore.authorizationStatus(for: .contacts) {
+        case .authorized:
+            completionHandler()
+        case .denied:
+            showSettingsAlert(type: "Contacts")
+        case .restricted, .notDetermined:
+            CNContactStore().requestAccess(for: .contacts) { granted, error in
+                if granted {
+                    completionHandler()
+                } else {
+                    DispatchQueue.main.async {
+                        self.showSettingsAlert(type: "Contacts")
+                    }
+                }
+            }
+        }
+    }
+    
+    static func showSettingsAlert(type: String) {
+        let alert = UIAlertController(title: nil, message: "This app requires access to \(type) to proceed. Would you like to open settings and grant permission to contacts?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+        })
+        UIApplication.topViewController()?.present(alert, animated: true)
+    }
+    
+    
+    
     //Return the mobile number of the contact
     static func getMobileNumber(contact: CNContact) -> String? {
         for number in contact.phoneNumbers {

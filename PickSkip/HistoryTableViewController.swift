@@ -12,6 +12,7 @@ import QuartzCore
 import AVFoundation
 import PhoneNumberKit
 import Photos
+import Contacts
 
 
 class HistoryTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -40,10 +41,6 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-//        for contact in Constants.contacts {
-//            print(contact.firstName! + contact.lastName! + "'s number: " + contact.phoneNumber!)
-//        }
         
         mediaDateLabel.adjustsFontSizeToFitWidth = true
         mediaDateLabel.layer.cornerRadius = 10
@@ -90,6 +87,8 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.register(OpenedMediaCell.self, forCellReuseIdentifier: "openedCell")
         tableView.separatorColor = .clear
     }
+    
+    
     
     
     func loadContent() {
