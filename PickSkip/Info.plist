@@ -36,8 +36,6 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCalendarsUsageDescription</key>
-	<string>PickSkip needs access to your calendar </string>
 	<key>NSCameraUsageDescription</key>
 	<string>Pickskip needs the camera to record your clips.</string>
 	<key>NSContactsUsageDescription</key>

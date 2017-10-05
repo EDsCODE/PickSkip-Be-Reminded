@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if (AVAudioSession.sharedInstance().recordPermission() != AVAudioSessionRecordPermission.granted) && (AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) != AVAuthorizationStatus.authorized) || (CNContactStore.authorizationStatus(for: .contacts) != .authorized) || UIApplication.shared.isRegisteredForRemoteNotifications != true {
-            SPRequestPermission.dialog.interactive.present(on: self, with: [.camera, .contacts, .notification, .microphone, .calendar])
+            SPRequestPermission.dialog.interactive.present(on: self, with: [.camera, .contacts, .notification, .microphone])
         }
         
         

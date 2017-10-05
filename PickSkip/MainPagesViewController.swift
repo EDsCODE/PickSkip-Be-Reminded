@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import AVFoundation
+import Contacts
 
 class MainPagesViewController: UIPageViewController {
 
@@ -29,6 +31,50 @@ class MainPagesViewController: UIPageViewController {
 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkPermissions()
+    }
+    
+    func checkPermissions() {
+        if(!(pages[Constants.initialViewPosition] as! CameraViewController).cameraloaded) {
+            if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized {
+                (self.pages[Constants.initialViewPosition] as! CameraViewController).setup()
+            } else {
+                AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { (granted: Bool) -> Void in
+                    if granted == true {
+                        (self.pages[Constants.initialViewPosition] as! CameraViewController).setup()
+                    } else {
+                        let alert = UIAlertController(title: nil, message: "This app requires access to your camera to proceed. Please open settings and grant permission to camera.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+                            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                        })
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                })
+            }
+        }
+        
+        if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+            DispatchQueue.global(qos: .userInteractive).async {
+                Util.loadContacts(completion: nil)
+            }
+        } else {
+            CNContactStore().requestAccess(for: .contacts) { granted, error in
+                if granted {
+                    DispatchQueue.global(qos: .userInteractive).async {
+                        Util.loadContacts(completion: nil)
+                    }
+                } else {
+                    let alert = UIAlertController(title: nil, message: "This app requires access to your contacts to proceed. Please open settings and grant permission to camera", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+                        UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                    })
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
     
 
     override func didReceiveMemoryWarning() {
