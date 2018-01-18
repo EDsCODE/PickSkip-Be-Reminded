@@ -3,7 +3,7 @@
 //  PickSkip
 //
 //  Created by Eric Duong on 8/2/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import Foundation
@@ -125,7 +125,7 @@ class TestView: UIView {
         
         circleLayer.path = circlePath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.strokeColor = UIColor(colorLiteralRed: 50.0/255.0, green: 50.0/255.0, blue: 50.0/255.0, alpha: 1.0).cgColor
+        circleLayer.strokeColor = UIColor(displayP3Red: 50.0/255.0, green: 50.0/255.0, blue: 50.0/255.0, alpha: 1.0).cgColor
         circleLayer.lineWidth = 2.0;
         circleLayer.strokeEnd = 1.0
         

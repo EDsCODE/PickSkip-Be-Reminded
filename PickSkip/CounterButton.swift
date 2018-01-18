@@ -102,7 +102,7 @@ class CounterButton : UIButton {
         titleLabel?.minimumScaleFactor = 0.5
         titleLabel?.textAlignment = .center
         setTitleColor(.white, for: .normal)
-        backgroundColor = UIColor(colorLiteralRed: 0.0, green: 0.0, blue: 0.0, alpha: 0.55)
+        backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.55)
         titleLabel?.lineBreakMode = .byWordWrapping
         titleLabel?.font = UIFont(name: "BebasNeueRegular", size: 40.0)
         layer.borderWidth = 1.3

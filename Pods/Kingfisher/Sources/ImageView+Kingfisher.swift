@@ -210,7 +210,7 @@ extension Kingfisher where Base: ImageView {
             // Add new
             if var newIndicator = newValue {
                 // Set default indicator frame if the view's frame not set.
-                if newIndicator.view.frame != .zero {
+                if newIndicator.view.frame == .zero {
                     newIndicator.view.frame = base.frame
                 }
                 newIndicator.viewCenter = CGPoint(x: base.bounds.midX, y: base.bounds.midY)
@@ -253,6 +253,6 @@ extension Kingfisher where Base: ImageView {
 }
 
 
-extension ImageView {
+@objc extension ImageView {
     func shouldPreloadAllAnimation() -> Bool { return true }
 }

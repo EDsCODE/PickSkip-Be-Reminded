@@ -16,11 +16,11 @@ class ContactFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        firstNameTF.textColor = UIColor(colorLiteralRed: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
-        lastNameTF.textColor = UIColor(colorLiteralRed: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
+        firstNameTF.textColor = UIColor(red: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
+        lastNameTF.textColor = UIColor(red: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
         submitButton.layer.cornerRadius = 20
         submitButton.layer.borderWidth = 2
-        submitButton.layer.borderColor = UIColor(colorLiteralRed: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0).cgColor
+        submitButton.layer.borderColor = UIColor(red: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0).cgColor
         // Do any additional setup after loading the view.
     }
 

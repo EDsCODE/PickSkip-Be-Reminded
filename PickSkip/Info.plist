@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.1</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>5</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -36,10 +36,12 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Pickskip needs access to your calendar.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Pickskip needs the camera to record your clips.</string>
+	<string>Pickskip needs access to your camera to record your clips.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>PickSkip needs to use your contacts</string>
+	<string>PickSkip needs access to your contacts</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Pickskip needs the microphone to record your clips.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

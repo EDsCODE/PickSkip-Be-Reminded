@@ -156,7 +156,7 @@ class RecordButton: UIButton {
         progressLayer.strokeEnd = newProgress
     }
     
-    public func updateProgress(timer: Timer) {
+    @objc public func updateProgress(timer: Timer) {
         if progressLayer.strokeEnd >= 1 || buttonState != .recording {
             self.buttonState = .idle
             delegate.maxRecordProgressReached()

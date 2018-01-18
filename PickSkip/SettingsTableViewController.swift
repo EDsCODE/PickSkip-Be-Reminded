@@ -22,7 +22,7 @@ class SettingsTableViewController: UITableViewController {
         
         self.navigationItem.titleView?.tintColor = .blue
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
-            NSFontAttributeName: UIFont(name: "Raleway-Light", size: 15.0)!
+            NSAttributedStringKey.font: UIFont(name: "Raleway-Light", size: 15.0)!
             ], for: .normal)
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -124,6 +124,7 @@ class SettingsTableViewController: UITableViewController {
         
         tableView.deselectRow(at: indexPath, animated: false)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showWebView" {
             let vc = segue.destination as! WebViewController
@@ -190,7 +191,7 @@ extension NSMutableAttributedString {
         
         let foundRange = self.mutableString.range(of: textToFind)
         if foundRange.location != NSNotFound {
-            self.addAttribute(NSLinkAttributeName, value: linkURL, range: foundRange)
+            self.addAttribute(NSAttributedStringKey.link, value: linkURL, range: foundRange)
             return true
         }
         return false

@@ -3,7 +3,7 @@
 //  PickSkip
 //
 //  Created by Eric Duong on 8/2/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ class UnopenedMediaCell: UITableViewCell {
     var cellFrame: CellFrameView = {
         let view = CellFrameView()
         view.backgroundColor = .white
-        view.layer.borderColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.4).cgColor
+        view.layer.borderColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.4).cgColor
         view.layer.borderWidth = 1
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

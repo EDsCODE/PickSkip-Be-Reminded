@@ -17,14 +17,6 @@ class WebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //eliminates gray bar at the top of webview
-        automaticallyAdjustsScrollViewInsets = false
-        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
-            NSFontAttributeName: UIFont(name: "Raleway-Light", size: 15.0)!
-            ], for: .normal)
-        self.navigationItem.leftBarButtonItem?.tintColor = Constants.defaultBlueColor
-        if let address = webAddress {
-            webView.loadRequest(URLRequest(url: URL(string: address)!))
-        }
         // Do any additional setup after loading the view.
     }
 

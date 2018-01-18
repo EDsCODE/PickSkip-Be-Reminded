@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  PickSkip
 //
-//  Created by Aaron Kau on 7/10/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Created by Eric Duong on 7/10/17.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit
@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
         UINavigationBar.appearance().tintColor = Constants.defaultBlueColor
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: Constants.defaultFont, size: 15.0)!], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: Constants.defaultFont, size: 15.0)!], for: .normal)
         
         
         return true

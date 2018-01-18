@@ -2,8 +2,8 @@
 //  LoginViewController.swift
 //  PickSkip
 //
-//  Created by Aaron Kau on 7/14/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Created by Eric Duong on 7/14/17.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit
@@ -25,10 +25,8 @@ class LoginViewController: UIViewController {
         
         loginButton.layer.cornerRadius = 20
         loginButton.layer.borderWidth = 2
-        loginButton.layer.borderColor = UIColor(colorLiteralRed: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0).cgColor
-        
-        phoneNumberTextField.textColor = UIColor(colorLiteralRed: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
-        
+        loginButton.layer.borderColor = UIColor(displayP3Red: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0).cgColor
+        phoneNumberTextField.textColor = UIColor(displayP3Red: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
         promptLabel.minimumScaleFactor = 0.2
         promptLabel.adjustsFontSizeToFitWidth = true
         activityIndicatorSpinner.hidesWhenStopped = true
@@ -38,8 +36,8 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if (AVAudioSession.sharedInstance().recordPermission() != AVAudioSessionRecordPermission.granted) && (AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) != AVAuthorizationStatus.authorized) || (CNContactStore.authorizationStatus(for: .contacts) != .authorized) || UIApplication.shared.isRegisteredForRemoteNotifications != true {
-            SPRequestPermission.dialog.interactive.present(on: self, with: [.camera, .contacts, .notification, .microphone])
+        if (AVAudioSession.sharedInstance().recordPermission() != AVAudioSessionRecordPermission.granted) && (AVCaptureDevice.authorizationStatus(for: AVMediaType.video) != AVAuthorizationStatus.authorized) || (CNContactStore.authorizationStatus(for: .contacts) != .authorized) || UIApplication.shared.isRegisteredForRemoteNotifications != true {
+            SPRequestPermission.dialog.interactive.present(on: self, with: [.camera, .contacts, .notification, .microphone, .calendar])
         }
         
         
@@ -66,7 +64,7 @@ class LoginViewController: UIViewController {
             let parsedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
             
             //If parse successful, connect to firebase and attempt to verify.
-            PhoneAuthProvider.provider().verifyPhoneNumber(parsedNumber) { (verificationID, error) in
+            PhoneAuthProvider.provider().verifyPhoneNumber(parsedNumber, uiDelegate: nil) { (verificationID, error) in
                 //When response received, stop spinner and re-enable user input
                 self.view.isUserInteractionEnabled = true
                 self.activityIndicatorSpinner.stopAnimating()

@@ -2,8 +2,8 @@
 //  CameraViewController.swift
 //  PickSkip
 //
-//  Created by Aaron Kau on 7/10/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Created by Eric Duong on 7/10/17.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit
@@ -20,14 +20,6 @@ class CameraViewController: UIViewController {
     var image: UIImage!
     var video: URL!
     var cameraloaded = false
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        
-    }
-    
     
     func setup(){
         feedButton.imageView?.contentMode = .scaleAspectFit

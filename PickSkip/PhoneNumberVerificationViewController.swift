@@ -2,8 +2,8 @@
 //  PhoneNumberVerificationViewController.swift
 //  PickSkip
 //
-//  Created by Aaron Kau on 7/14/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Created by Eric Duong on 7/14/17.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit

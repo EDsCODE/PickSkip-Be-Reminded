@@ -2,8 +2,8 @@
 //  HistoryTableViewController.swift
 //  PickSkip
 //
-//  Created by Aaron Kau on 7/15/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Created by Eric Duong on 7/15/17.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit
@@ -41,7 +41,6 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         mediaDateLabel.adjustsFontSizeToFitWidth = true
         mediaDateLabel.layer.cornerRadius = 10
         mediaDateLabel.clipsToBounds = true
@@ -73,7 +72,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func additionalLayout() {
-        titlePanel.addBottomBorder(with: UIColor(colorLiteralRed: 50.0/255.0, green: 50.0/255.0, blue: 50.0/255.0, alpha: 1.0) , andWidth: 1.0)
+        titlePanel.addBottomBorder(with: UIColor(displayP3Red: 50.0/255.0, green: 50.0/255.0, blue: 50.0/255.0, alpha: 1.0) , andWidth: 1.0)
         
         downloadMediaButton.imageView?.contentMode = .scaleAspectFit
         showSettingsButton.imageView?.contentMode = .scaleAspectFit
@@ -140,11 +139,11 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
     func setupLoadMore() {
         self.tableView.refreshControl = UIRefreshControl()
         
-        self.tableView.refreshControl!.attributedTitle = NSAttributedString(string: "Load more opened media", attributes: [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: UIFont(name: "Raleway-Light", size: 15.0)!])
+        self.tableView.refreshControl!.attributedTitle = NSAttributedString(string: "Load more opened media", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: UIFont(name: "Raleway-Light", size: 15.0)!])
         self.tableView.refreshControl!.addTarget(self, action: #selector(loadMoreOpened), for: UIControlEvents.valueChanged)
     }
     
-    public func loadMoreOpened() {
+    @objc public func loadMoreOpened() {
         
         let number = Auth.auth().currentUser!.providerData.first!.phoneNumber!
         let startingPoint = -(openedMediaArray.first?.openDate ?? Int.max)
@@ -173,6 +172,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
                                       thumbnailReference: thumbnailReference)
             self.openedMediaArray.insert(mediaInstance, at: 0)
             
+            //get Thumbnail and update thumbnail image async
             thumbnailReference.getData(maxSize: Constants.maxDownloadSize, completion: { (data,error) in
                 if let error = error {
                     print(error.localizedDescription)
@@ -185,9 +185,6 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
             })
             
             self.tableView.reloadData()
-            self.tableView.refreshControl?.endRefreshing()
-            
-            
         })
         self.tableView.refreshControl?.endRefreshing()
     }
@@ -244,7 +241,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
 
     }
     
-    func hideMedia(gesture: UITapGestureRecognizer) {
+    @objc func hideMedia(gesture: UITapGestureRecognizer) {
         mediaView.isHidden = true
         optionsView.isHidden = true
         mediaDateLabel.text = ""
@@ -272,14 +269,14 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     //Gesture that scrolls to Upcoming if title is pressed
-    func titlePressed(gesture: UITapGestureRecognizer) {
+    @objc func titlePressed(gesture: UITapGestureRecognizer) {
         if tableView.numberOfRows(inSection: 1) > 0 {
             tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .middle, animated: true)
         }
     }
     
     //delete cell on long press
-    func deleteCell(gesture: UILongPressGestureRecognizer) {
+    @objc func deleteCell(gesture: UILongPressGestureRecognizer) {
         let point: CGPoint = gesture.location(in: self.tableView)
         let indexPath = self.tableView.indexPathForRow(at: point)
         let alert = UIAlertController(title: "Delete media", message: "Are you sure you want to delete this picture or video?", preferredStyle: .alert)
@@ -340,7 +337,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
@@ -394,9 +391,9 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
             } else if cell.media.loadState == .loading{
                 cell.loadAnimation()
             } else {
-                cell.dateLabel.textColor = UIColor(colorLiteralRed: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
-                cell.nameLabel.textColor = UIColor(colorLiteralRed: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
-                cell.thumbnailSpinner.layer.strokeColor = UIColor(colorLiteralRed: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0).cgColor
+                cell.dateLabel.textColor = UIColor(displayP3Red: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+                cell.nameLabel.textColor = UIColor(displayP3Red: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+                cell.thumbnailSpinner.layer.strokeColor = UIColor(displayP3Red: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0).cgColor
             }
             
             return cell
@@ -417,10 +414,10 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 cell.dateLabel.font = UIFont(name: "Raleway-Light", size: 20)
                 cell.nameLabel.font = UIFont(name: "Raleway-Light", size: 20)
-                cell.nameLabel.textColor = UIColor(colorLiteralRed: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
-                cell.dateLabel.textColor = UIColor(colorLiteralRed: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+                cell.nameLabel.textColor = UIColor(displayP3Red: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+                cell.dateLabel.textColor = UIColor(displayP3Red: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
                 cell.cellFrame.layer.borderWidth = 1.0
-                cell.cellFrame.layer.borderColor = UIColor(colorLiteralRed: 150.0/255.0, green: 150.0/255.0, blue: 150.0/255.0, alpha: 1.0).cgColor
+                cell.cellFrame.layer.borderColor = UIColor(displayP3Red: 150.0/255.0, green: 150.0/255.0, blue: 150.0/255.0, alpha: 1.0).cgColor
             }
             
             return cell
@@ -441,7 +438,7 @@ class HistoryTableViewController: UIViewController, UITableViewDelegate, UITable
             
                 if cell.media.mediaType == "image" {
                     cell.loadAnimation()
-                    mediaView.kf.setImage(with: openedMediaArray[indexPath.row].url ,completionHandler: { _ in
+                    mediaView.kf.setImage(with: openedMediaArray[indexPath.row].url ,completionHandler: { _,_,_,_ in
                         cell.cancelAnimation()
                         self.showMedia()
                         self.mediaDateLabel.text = "Sent " + Util.formatDateLabelDate(date: cell.media.sentDate, split: false)

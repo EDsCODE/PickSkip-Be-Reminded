@@ -2,8 +2,8 @@
 //  MainPagesViewController.swift
 //  PickSkip
 //
-//  Created by Aaron Kau on 7/11/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Created by Eric Duong on 7/11/17.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit
@@ -38,10 +38,10 @@ class MainPagesViewController: UIPageViewController {
     
     func checkPermissions() {
         if(!(pages[Constants.initialViewPosition] as! CameraViewController).cameraloaded) {
-            if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized {
+            if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
                 (self.pages[Constants.initialViewPosition] as! CameraViewController).setup()
             } else {
-                AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { (granted: Bool) -> Void in
+                AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted: Bool) -> Void in
                     if granted == true {
                         (self.pages[Constants.initialViewPosition] as! CameraViewController).setup()
                     } else {

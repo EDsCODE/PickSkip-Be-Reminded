@@ -3,7 +3,7 @@
 //  PickSkip
 //
 //  Created by Eric Duong on 7/31/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit
@@ -67,7 +67,7 @@ class ContactsViewController: UIViewController {
         
         self.navigationItem.titleView?.tintColor = .blue
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
-            NSFontAttributeName: UIFont(name: "Raleway-Light", size: 15.0)!
+            NSAttributedStringKey.font: UIFont(name: "Raleway-Light", size: 15.0)!
             ], for: .normal)
         
         setupKeyboardObserver()
@@ -123,7 +123,7 @@ class ContactsViewController: UIViewController {
     }
     
     ///Called when keyboard will be shown.
-    func handleKeyboardWillShow(notification: NSNotification) {
+    @objc func handleKeyboardWillShow(notification: NSNotification) {
         
         let keyboardAnimationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
         let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
@@ -137,7 +137,7 @@ class ContactsViewController: UIViewController {
     }
     
     ///Called when keyboard will be hidden.
-    func handleKeyboardWillHide(notification: NSNotification) {
+    @objc func handleKeyboardWillHide(notification: NSNotification) {
         let keyboardAnimationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
         
         UIView.animate(withDuration: keyboardAnimationDuration, animations: {
@@ -176,7 +176,7 @@ class ContactsViewController: UIViewController {
         releaseDate = nil
     }
     
-    func sendContent(gesture: UITapGestureRecognizer) {
+    @objc func sendContent(gesture: UITapGestureRecognizer) {
         var recipients: [String] = []
         for selectedContact in selectedContacts {
             if let phoneNumeber = selectedContact.phoneNumber {
@@ -324,7 +324,7 @@ extension ContactsViewController: TokenFieldDataSource {
     }
     
     func tokenField(_ tokenField: TokenField, colorSchemedForTokenAtIndex index: Int) -> UIColor {
-        return UIColor(colorLiteralRed:33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
+        return UIColor(displayP3Red:33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
     }
     
     func tokenFieldCollapsedText(_ tokenField: TokenField) -> String {
@@ -369,7 +369,7 @@ extension ContactsViewController: TokenFieldDelegate {
     
     func tokenField(_ tokenField: TokenField, didChangeText text: String) {
         
-        if text.characters.count == 0 {
+        if text.count == 0 {
             filtered.removeAll()
             filtered = Constants.contacts
             searchActive = false

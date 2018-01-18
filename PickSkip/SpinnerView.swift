@@ -3,7 +3,7 @@
 //  PickSkip
 //
 //  Created by Eric Duong on 8/16/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import Foundation
@@ -24,7 +24,7 @@ class SpinnerView : UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.fillColor = nil
-        layer.strokeColor = UIColor(colorLiteralRed: 150.0/255.0, green: 150.0/255.0, blue: 150.0/255.0, alpha: 1.0).cgColor
+        layer.strokeColor = UIColor(displayP3Red: 150.0/255.0, green: 150.0/255.0, blue: 150.0/255.0, alpha: 1.0).cgColor
         layer.lineWidth = 2
         setPath()
         

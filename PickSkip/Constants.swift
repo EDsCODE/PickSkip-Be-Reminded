@@ -2,8 +2,8 @@
 //  Constants.swift
 //  PickSkip
 //
-//  Created by Aaron Kau on 7/11/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Created by Eric Duong on 7/11/17.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import Foundation
@@ -19,7 +19,7 @@ class Constants {
     
     static var contacts: [Contact] = []
     
-    static let defaultBlueColor: UIColor = UIColor(colorLiteralRed: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
+    static let defaultBlueColor: UIColor = UIColor(red: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
     
     static let defaultFont: String = "Raleway-Light"
     
@@ -48,22 +48,22 @@ class Constants {
     static let videoFileName: String = "temp.mp4"
 
     ///Default camera/playback video gravity (determines how to stretch/distort images to fit in screen)
-    static let videoGravity: String = AVLayerVideoGravityResizeAspectFill
+    static let videoGravity: String = AVLayerVideoGravity.resizeAspectFill.rawValue
     
     ///Default camera focusing mode
-    static let focusMode: AVCaptureFocusMode = .autoFocus
+    static let focusMode: AVCaptureDevice.FocusMode = .autoFocus
     
     ///Default camera exposure mode
-    static let exposureMode: AVCaptureExposureMode = .continuousAutoExposure
+    static let exposureMode: AVCaptureDevice.ExposureMode = .continuousAutoExposure
     
     ///The constants above may be modified to modify application functionality. Please do not alter the constants below.
     
-    static let backCamera: AVCaptureDevice = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back)
+    static let backCamera: AVCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)!
     
 
-    static let frontCamera: AVCaptureDevice = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .front)
+    static let frontCamera: AVCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
 
-    static let microphone: AVCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeAudio)
+    static let microphone: AVCaptureDevice = AVCaptureDevice.default(for: AVMediaType.audio)!
     
 }
 

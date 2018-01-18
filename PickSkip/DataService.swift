@@ -3,7 +3,7 @@
 //  PickSkip
 //
 //  Created by Eric Duong on 7/18/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import Foundation
@@ -62,7 +62,6 @@ class DataService {
                                                 "opened": -1 as AnyObject]
         
         let key = mainRef.childByAutoId().key
-        
         for recipient in recipients {
             //Add to recipient's history
             usersRef.child(recipient).child("profile").child("invitedBy").setValue(senderNumber)

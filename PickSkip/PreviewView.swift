@@ -2,8 +2,8 @@
 //  PreviewView.swift
 //  PickSkip
 //
-//  Created by Aaron Kau on 7/11/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Created by Eric Duong on 7/11/17.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit
@@ -12,7 +12,7 @@ import Kingfisher
 
 class PreviewView: UIImageView {
 
-     var playerLayer: AVPlayerLayer?
+    var playerLayer: AVPlayerLayer?
     fileprivate var repeatObserver: NSObjectProtocol?
     
     ///Accepts a video and play it on repeat.
@@ -21,7 +21,7 @@ class PreviewView: UIImageView {
         
         playerLayer = AVPlayerLayer(player: player)
         playerLayer!.frame = bounds
-        playerLayer!.videoGravity = Constants.videoGravity
+        playerLayer!.videoGravity = AVLayerVideoGravity(rawValue: Constants.videoGravity)
         layer.addSublayer(playerLayer!)
         
         playOnRepeat(player)

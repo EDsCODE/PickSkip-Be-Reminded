@@ -3,7 +3,7 @@
 //  PickSkip
 //
 //  Created by Eric Duong on 7/30/17.
-//  Copyright © 2017 Aaron Kau. All rights reserved.
+//  Copyright © 2017 Eric Duong. All rights reserved.
 //
 
 import UIKit
@@ -151,7 +151,7 @@ class PreviewController: UIViewController {
         }
     }
     
-    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
@@ -187,7 +187,7 @@ class PreviewController: UIViewController {
         
     }
     
-    func reset(gesture: UITapGestureRecognizer) {
+    @objc func reset(gesture: UITapGestureRecognizer) {
         guard let button = gesture.view as? UIButton else {return}
         switch button.tag {
         case 1:

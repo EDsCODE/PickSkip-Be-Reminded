@@ -116,7 +116,7 @@ public class TokenField: UIView {
         }
     }
     /// TokenField color scheme, initial value = .blue
-    public var colorScheme: UIColor = UIColor(colorLiteralRed: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0) {
+    public var colorScheme: UIColor = UIColor(red: 33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0) {
         didSet {
             collapsedLabel?.textColor = colorScheme
             inputTextView.textColor = colorScheme
@@ -237,7 +237,7 @@ public class TokenField: UIView {
     
     // MARK: - Internal
     
-    internal func handleSingleTap(_ sender: UITapGestureRecognizer) {
+    @objc internal func handleSingleTap(_ sender: UITapGestureRecognizer) {
         _ = becomeFirstResponder()
     }
     
