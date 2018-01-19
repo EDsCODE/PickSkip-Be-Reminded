@@ -126,14 +126,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/Sparrow</string>
-			<key>Title</key>
-			<string>Sparrow</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/TokenField</string>
 			<key>Title</key>
 			<string>TokenField</string>

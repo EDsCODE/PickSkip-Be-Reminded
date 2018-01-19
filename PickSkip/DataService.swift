@@ -93,6 +93,23 @@ class DataService {
 
     }
     
+    func doesUserExist(number: String, completion: @escaping (_ result: Bool) -> Void) {
+        mainRef.child("users").observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
+            if snapshot.hasChild(number) {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        })
+    }
+    
+    func fetchCurrentUser() {
+        usersRef.child(Auth.auth().currentUser!.phoneNumber!).child("profile").observeSingleEvent(of: .value) { (snapshot) in
+            CurrentUser.firstname = snapshot.childSnapshot(forPath: "firstname").value as! String
+            CurrentUser.lastname = snapshot.childSnapshot(forPath: "lastname").value as! String
+        }
+    }
+    
     func setOpened(key: String, openDate: Int, thumbnailURL: String) {
         //Set opened to true
         usersRef.child(Auth.auth().currentUser!.providerData[0].phoneNumber!).child("unopened").child(key).child("opened").setValue(openDate)

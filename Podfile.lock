@@ -1,31 +1,32 @@
 PODS:
-  - Firebase/Auth (4.8.0):
+  - FA_TokenInputView (0.2.3)
+  - Firebase/Auth (4.8.1):
     - Firebase/Core
-    - FirebaseAuth (= 4.4.1)
-  - Firebase/Core (4.8.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.13)
-  - Firebase/Database (4.8.0):
+    - FirebaseAuth (= 4.4.2)
+  - Firebase/Core (4.8.1):
+    - FirebaseAnalytics (= 4.0.7)
+    - FirebaseCore (= 4.0.14)
+  - Firebase/Database (4.8.1):
     - Firebase/Core
-    - FirebaseDatabase (= 4.1.3)
-  - Firebase/Messaging (4.8.0):
+    - FirebaseDatabase (= 4.1.4)
+  - Firebase/Messaging (4.8.1):
     - Firebase/Core
     - FirebaseMessaging (= 2.0.8)
-  - Firebase/Storage (4.8.0):
+  - Firebase/Storage (4.8.1):
     - Firebase/Core
-    - FirebaseStorage (= 2.1.1)
-  - FirebaseAnalytics (4.0.5):
+    - FirebaseStorage (= 2.1.2)
+  - FirebaseAnalytics (4.0.7):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseAuth (4.4.1):
+  - FirebaseAuth (4.4.2):
     - FirebaseAnalytics (~> 4.0)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.13):
+  - FirebaseCore (4.0.14):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (4.1.3):
+  - FirebaseDatabase (4.1.4):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - leveldb-library (~> 1.18)
@@ -37,7 +38,7 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
-  - FirebaseStorage (2.1.1):
+  - FirebaseStorage (2.1.2):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - GTMSessionFetcher/Core (~> 1.1)
@@ -54,7 +55,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
   - GTMSessionFetcher/Core (1.1.12)
-  - Kingfisher (4.5.0)
+  - Kingfisher (4.6.1)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -68,12 +69,10 @@ PODS:
   - PhoneNumberKit/UIKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore
   - Protobuf (3.5.0)
-  - Sparrow/Core (1.1.0)
-  - Sparrow/Modules/RequestPermission (1.1.0):
-    - Sparrow/Core
   - TokenField (0.1.2)
 
 DEPENDENCIES:
+  - FA_TokenInputView
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -81,37 +80,27 @@ DEPENDENCIES:
   - Firebase/Storage
   - Kingfisher (~> 4.0)
   - PhoneNumberKit
-  - Sparrow/Modules/RequestPermission (from `https://github.com/IvanVorobei/Sparrow.git`)
   - TokenField (~> 0.1.2)
 
-EXTERNAL SOURCES:
-  Sparrow:
-    :git: https://github.com/IvanVorobei/Sparrow.git
-
-CHECKOUT OPTIONS:
-  Sparrow:
-    :commit: d3becbdd5dbc982a53a461188ea35b818342a9ed
-    :git: https://github.com/IvanVorobei/Sparrow.git
-
 SPEC CHECKSUMS:
-  Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseAuth: dc0dd403beca5b2b016aac89c2d0b8dad1c81926
-  FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
-  FirebaseDatabase: 7088bfc4af2cc00231bb36e1404fc2d7509eb4dc
+  FA_TokenInputView: 71b2cf257d906e95dad66a3f684f76fcadb04e7e
+  Firebase: 2721056b8885eef90233b03f37be64358d35d262
+  FirebaseAnalytics: 617afa8c26b57a0c3f11361b248bc9e17bfd8dfd
+  FirebaseAuth: bd2738c5c1e92b108ba5f7f7335908097a4e50bb
+  FirebaseCore: 2e0b98fb2d64ca8140136beff15772bdd14d2dd7
+  FirebaseDatabase: de4446507ccd3257fca37d16f40e1540324571fd
   FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
   FirebaseMessaging: dfdcd307c2382290a1e297a81d0f18370f5b1bcd
-  FirebaseStorage: ab08d1c93a2feffa038fdd6693088b310ab1e6c6
+  FirebaseStorage: 181bb543d39ee3c53e0558de7ba86b1286a0427f
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
-  Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
-  Sparrow: 86b8f0d7598dc52ff2b06bb1df05feb297d1821f
   TokenField: a38b4177b36bd2c75ad08d2112288c257bffeedb
 
-PODFILE CHECKSUM: 964c506f667654b00cd97ca62e0a06b62411ca2a
+PODFILE CHECKSUM: 4937df16be61528ad3e3be0536c554b8803f96d2
 
 COCOAPODS: 1.1.1

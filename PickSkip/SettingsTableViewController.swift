@@ -99,11 +99,16 @@ class SettingsTableViewController: UITableViewController {
             let logoutAction = UIAlertAction(title: "Logout", style: .default, handler: { (action) in
                 do {
                     try Auth.auth().signOut()
-                    self.dismiss(animated: true, completion: nil)
+                    let storyBoard = UIStoryboard(name: "Auth", bundle: nil)
+                    let mainViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController")
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.window?.rootViewController = mainViewController
                 } catch {
                     print("error signing out")
                 }
             })
+            cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+            logoutAction.setValue(UIColor.red, forKey: "titleTextColor")
             alert.addAction(cancelAction)
             alert.addAction(logoutAction)
             self.present(alert, animated: true, completion: nil)

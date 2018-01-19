@@ -544,6 +544,7 @@ extension TokenField: BackspaceTextViewDelegate {
     
     /// :nodoc:
     internal func textViewDidEnterBackspace(_ textView: BackspaceTextView) {
+        print(":delete something")
         if let tokenCount = dataSource?.numberOfTokensInTokenField(self), tokenCount > 0 {
             var tokenDeleted = false
             for token in tokens {

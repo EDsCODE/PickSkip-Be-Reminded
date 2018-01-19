@@ -61,17 +61,20 @@ class PhoneNumberVerificationViewController: UIViewController {
                 self.errorMessage.isHidden = false
                 return
             } else {
-                DataService.instance.mainRef.child("users").child((user?.providerData[0].phoneNumber!)!).child("profile").observeSingleEvent(of: .value, with: {(snapshot) in
+                DataService.instance.doesUserExist(number: user!.providerData[0].phoneNumber!) {(exists) in
+                    if exists {
                         self.activityIndicatorSpinner.stopAnimating()
-                        self.view.isUserInteractionEnabled = true
-                        if snapshot.hasChild("firstname"){
-                            self.dismiss(animated: true, completion: nil)
-                        }else{
-                            self.performSegue(withIdentifier: "contactFormSegue", sender: self)
-                        }
-                    })
+                        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.window?.rootViewController = mainViewController
+                    } else {
+                        self.performSegue(withIdentifier: "contactFormSegue", sender: self)
+                    }
+                    self.view.isUserInteractionEnabled = true
+                    self.view.endEditing(true)
+                }
             }
-
         }
     }
     

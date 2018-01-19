@@ -15,10 +15,10 @@ import Fabric
 import Crashlytics
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
-
+    var storyboard: UIStoryboard!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -30,7 +30,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UINavigationBar.appearance().tintColor = Constants.defaultBlueColor
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: Constants.defaultFont, size: 15.0)!], for: .normal)
         
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+            // For iOS 10 data message (sent via FCM
+            Messaging.messaging().delegate = self
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
         
+        application.registerForRemoteNotifications()
+        
+        let userDefaults = UserDefaults.standard
+        if userDefaults.value(forKey: "appFirstTimeOpened") == nil {
+            //if app is first time opened then it will be nil
+            userDefaults.setValue(true, forKey: "appFirstTimeOpened")
+            // signOut from FIRAuth
+            do {
+                try Auth.auth().signOut()
+            }catch {
+                print("Error clearing login")
+            }
+        }
+        
+        if Auth.auth().currentUser != nil {
+            storyboard = UIStoryboard(name: "Main", bundle: .main)
+            DataService.instance.fetchCurrentUser()
+        } else {
+            storyboard = UIStoryboard(name: "Auth", bundle: .main)
+        }
+        
+        // 2
+        if let initialViewController = storyboard.instantiateInitialViewController() {
+            // 3
+            window?.rootViewController = initialViewController
+            // 4
+            window?.makeKeyAndVisible()
+        }
         return true
     }
 
@@ -64,6 +106,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Further handling of the device token if needed by the app
         // ...
+    }
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        //keep notifcationtoken updated
+        
+        //CHECK THIS
+        if let user = Auth.auth().currentUser {
+            DataService.instance.usersRef.child(user.phoneNumber!).child("profile").child("NotificationToken").setValue(fcmToken)
+        }
     }
     
     func application(_ application: UIApplication,

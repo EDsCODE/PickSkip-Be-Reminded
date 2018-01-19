@@ -17,7 +17,6 @@ class MainPagesViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         dataSource = self
         //Appends the View Controllers from the Constants class
         for id in Constants.mainPagesViews {
@@ -27,8 +26,6 @@ class MainPagesViewController: UIPageViewController {
         //Prepares the first view controller to be displayed.
         setViewControllers([pages[Constants.initialViewPosition]], direction: .forward, animated: true, completion: nil)
         
-        
-
     }
     
     override func viewDidAppear(_ animated: Bool) {

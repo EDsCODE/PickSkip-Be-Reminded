@@ -104,7 +104,7 @@ class CounterButton : UIButton {
         setTitleColor(.white, for: .normal)
         backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.55)
         titleLabel?.lineBreakMode = .byWordWrapping
-        titleLabel?.font = UIFont(name: "BebasNeueRegular", size: 40.0)
+        titleLabel?.font = UIFont(name: "BebasNeueLight", size: 40.0)
         layer.borderWidth = 1.3
         layer.borderColor = UIColor.black.cgColor
         updateCounter(to: 0)

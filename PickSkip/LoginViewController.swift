@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import PhoneNumberKit
-import Sparrow
 import Contacts
 import AVFoundation
 
@@ -34,17 +33,6 @@ class LoginViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        if (AVAudioSession.sharedInstance().recordPermission() != AVAudioSessionRecordPermission.granted) && (AVCaptureDevice.authorizationStatus(for: AVMediaType.video) != AVAuthorizationStatus.authorized) || (CNContactStore.authorizationStatus(for: .contacts) != .authorized) || UIApplication.shared.isRegisteredForRemoteNotifications != true {
-            SPRequestPermission.dialog.interactive.present(on: self, with: [.camera, .contacts, .notification, .microphone, .calendar])
-        }
-        
-        
-        
-    }
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -76,8 +64,8 @@ class LoginViewController: UIViewController {
                 }
                 //Otherwise, send to verification page.
                 UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+                self.view.endEditing(true)
                 self.performSegue(withIdentifier: "loginToVerification", sender: nil)
-
             }
             //If phone number parsing fails, print error.
         } catch {

@@ -16,7 +16,7 @@ class OpenedMediaCell: UITableViewCell {
     var nameLabel: UILabel = {
         let label = UILabel()
         label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont(name: Constants.defaultFont, size: 20)
+        label.font = UIFont(name: Constants.defaultFont, size: 18)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Placeholder"
@@ -25,9 +25,8 @@ class OpenedMediaCell: UITableViewCell {
     
     var dateLabel: UILabel = {
         let label = UILabel()
-        label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.3
-        label.font = UIFont(name: Constants.defaultFont, size: 40)
+        label.font = UIFont(name: Constants.defaultFont, size: 13)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .right
@@ -72,7 +71,7 @@ class OpenedMediaCell: UITableViewCell {
             nameLabel.leadingAnchor.constraint(equalTo: thumbnailSpinner.trailingAnchor, constant: 15),
             nameLabel.topAnchor.constraint(equalTo: self.topAnchor),
             nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            nameLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.4),
+            nameLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.35),
             dateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15.0),
             dateLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15.0),
             dateLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10.0),
