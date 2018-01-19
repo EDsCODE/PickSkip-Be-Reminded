@@ -1,3 +1,6 @@
+name: FA_TokenInputView, nameSpecified: 
+body: Copyright (c) 2015 P…
+
 name: Firebase, nameSpecified: 
 body: Copyright 2018 Googl…
 

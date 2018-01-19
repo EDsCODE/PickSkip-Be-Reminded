@@ -76,9 +76,6 @@ class UnopenedMediaCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        
-    }
     
     func shake() {
         let duration: CFTimeInterval = 0.3

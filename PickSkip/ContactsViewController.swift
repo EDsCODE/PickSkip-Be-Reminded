@@ -10,16 +10,17 @@ import UIKit
 import TokenField
 import Contacts
 import Firebase
+import FA_TokenInputView
+
 
 
 class ContactsViewController: UIViewController {
     
-    
-    @IBOutlet weak var tokenField: TokenField!
-    @IBOutlet weak var contactTableView: UITableView!
-    @IBOutlet weak var tokenFieldHeight: NSLayoutConstraint!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
+    
+    var toField: FA_TokenInputView!
+    var contactTableView: UITableView!
     
     var sendButton: SendButton = {
         let button = SendButton()
@@ -41,20 +42,57 @@ class ContactsViewController: UIViewController {
     var filtered : [Contact] = []
     var searchActive = false
     var keyboardIsActive = false
+    var keyboardHeight: CGFloat = 0
     var buttonBottomConstraint: NSLayoutConstraint!
     var dateComponenets: DateComponents!
     var releaseDate: Date!
     var image: Data?
     var video: URL?
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        toField = FA_TokenInputView()
+        toField.translatesAutoresizingMaskIntoConstraints = false
+        toField.placeholderText = "Enter a name"
+        toField.drawBottomBorder = true
+        toField.delegate = self
+        toField.tintColor = Constants.defaultBlueColor
+        toField.setColors(.black, selectedTextColor: .black, selectedBackgroundColor: Constants.defaultBlueColor)
+        toField.fieldName = "To"
+        toField.font = UIFont.systemFont(ofSize: 14.0)
+        toField.fieldNameFont = UIFont.systemFont(ofSize: 13.0)
+        toField.fieldNameColor = UIColor.black
+        
+        contactTableView = UITableView()
+        contactTableView.translatesAutoresizingMaskIntoConstraints = false
+        contactTableView.dataSource = self
+        contactTableView.delegate = self
+        contactTableView.isHidden = false
+        let backgroundView = UIView(frame: CGRect())
+        contactTableView.tableFooterView = backgroundView
+        contactTableView.separatorColor = .clear
+        contactTableView.register(ContactCell.self, forCellReuseIdentifier: "cell")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.addSubview(contactTableView)
+        self.view.addSubview(toField)
         
-        contactTableView.delegate = self
-        contactTableView.dataSource = self
-        tokenField.dataSource = self
-        tokenField.delegate = self
+        let views = [
+            "to": toField,
+            "contacts": contactTableView,
+            "topGuide": self.topLayoutGuide,
+            "bottomGuide": self.bottomLayoutGuide
+            ] as [String: AnyObject]
+        
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[topGuide][to][contacts][bottomGuide]|", options: .directionLeadingToTrailing, metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[to]|", options: .directionLeftToRight, metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[contacts]|", options: .directionLeftToRight, metrics: nil, views: views))
+        self.toField.setHeightToAuto()
+        
         setupSendButton()
         
         timeLabel.adjustsFontSizeToFitWidth = true
@@ -72,6 +110,12 @@ class ContactsViewController: UIViewController {
         
         setupKeyboardObserver()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        toField.removeAllTokens()
+        selectedContacts = []
     }
     
     func dateToString(dateComponents: DateComponents) -> String {
@@ -124,29 +168,29 @@ class ContactsViewController: UIViewController {
     
     ///Called when keyboard will be shown.
     @objc func handleKeyboardWillShow(notification: NSNotification) {
-        
         let keyboardAnimationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
-        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-        UIView.animate(withDuration: keyboardAnimationDuration, animations: {
-            self.buttonBottomConstraint.constant = -(keyboardSize?.height)! - 10
-            if !self.keyboardIsActive {
+        let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        
+        if !keyboardIsActive {
+            UIView.animate(withDuration: keyboardAnimationDuration, animations: {
+                self.buttonBottomConstraint.constant = -(keyboardSize?.height)! - 10
                 self.view.layoutIfNeeded()
                 self.keyboardIsActive = true
-            }
-        })
+            })
+        }
     }
     
     ///Called when keyboard will be hidden.
     @objc func handleKeyboardWillHide(notification: NSNotification) {
         let keyboardAnimationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
         
-        UIView.animate(withDuration: keyboardAnimationDuration, animations: {
-            self.buttonBottomConstraint.constant = -10
-            if !self.keyboardIsActive {
+        if keyboardIsActive {
+            UIView.animate(withDuration: keyboardAnimationDuration, animations: {
+                self.buttonBottomConstraint.constant = -10
                 self.view.layoutIfNeeded()
                 self.keyboardIsActive = false
-            }
-        })
+            })
+        }
         
     }
 
@@ -156,18 +200,17 @@ class ContactsViewController: UIViewController {
     }
     
     func updateSendButton(){
+        print("updating send button")
+        print(selectedContacts)
         if selectedContacts.count == 0 {
             sendButton.isHidden = true
             contactTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         } else {
+            print("showing button")
             sendButton.isHidden = false
+            self.view.bringSubview(toFront: sendButton)
             contactTableView.contentInset = UIEdgeInsetsMake(0, 0, 80, 0)
         }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        tokenField.endEditing(true)
-        
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -216,6 +259,10 @@ class ContactsViewController: UIViewController {
             presentingVC.dismiss(animated: false, completion: nil)
         })
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
     
 
@@ -243,8 +290,6 @@ extension ContactsViewController: UITableViewDataSource {
             }
             //cell data 
             cell.contact = filtered[indexPath.row]
-            cell.textLabel?.text = filtered[indexPath.row].firstName! + " " + filtered[indexPath.row].lastName!
-            cell.detailTextLabel?.text = cell.contact.phoneNumber!
         } else {
             contactTableView.isHidden = true
             infoLabel.isHidden = false
@@ -277,19 +322,18 @@ extension ContactsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? ContactCell {
-            if selectedContacts.contains(cell.contact) {
-                selectedContacts = selectedContacts.filter({$0 != cell.contact})
+            if selectedContacts.contains(cell.contact!) {
+                toField.removeToken(token: FA_Token(displayText: cell.nameLabel.text!, baseObject: cell.contact!))
+                toField.getTextFieldView().text = ""
                 if selectedContacts.isEmpty {
                     tableView.isHidden = true
                 }
-                tokenField.reloadData()
-                updateSendButton()
+                toField.reloadInputViews()
                 cell.backgroundColor = .clear
                 cell.detailTextLabel?.textColor = .gray
             } else {
-                selectedContacts.append(cell.contact)
-                tokenField.reloadData()
-                updateSendButton()
+                toField.addToken(token: FA_Token(displayText: cell.nameLabel.text!, baseObject: cell.contact!))
+                toField.reloadInputViews()
                 cell.backgroundColor = Constants.defaultBlueColor
                 cell.detailTextLabel?.textColor = .white
             }
@@ -300,76 +344,34 @@ extension ContactsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? ContactCell {
-            selectedContacts = selectedContacts.filter({$0 != cell.contact})
             if selectedContacts.isEmpty {
                 tableView.isHidden = true
             }
-            tokenField.reloadData()
-            updateSendButton()
+            toField.reloadInputViews()
             cell.backgroundColor = .clear
         }
     }
     
 }
 
-extension ContactsViewController: TokenFieldDataSource {
-    func tokenField(_ tokenField: TokenField, titleForTokenAtIndex index: Int) -> String {
-        //implement
-        return selectedContacts[index].firstName! + " " + selectedContacts[index].lastName! + ","
-    }
+extension ContactsViewController: FA_TokenInputViewDelegate {
     
-    func numberOfTokensInTokenField(_ tokenField: TokenField) -> Int {
-        //implement
-        return selectedContacts.count
-    }
-    
-    func tokenField(_ tokenField: TokenField, colorSchemedForTokenAtIndex index: Int) -> UIColor {
-        return UIColor(displayP3Red:33.0/255.0, green: 150.0/255.0, blue: 243.0/255.0, alpha: 1.0)
-    }
-    
-    func tokenFieldCollapsedText(_ tokenField: TokenField) -> String {
-        //implement
-        return "temp"
-    }
-}
-
-extension ContactsViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        tokenField.endEditing(true)
-    }
-}
-
-extension ContactsViewController: TokenFieldDelegate {
-    
-    func tokenFieldDidBeginEditing(_ tokenField: TokenField) {
-        //implement
-        searchActive = true
-    }
-    
-    func tokenField(_ tokenField: TokenField, didEnterText text: String) {
-        
-        searchActive = false
-        tokenField.endEditing(true)
-    }
-    
-    func tokenField(_ tokenField: TokenField, didDeleteTokenAtIndex index: Int) {
-        //implement
-        selectedContacts.remove(at: index)
-        if selectedContacts.count == 0 {
-            self.contactTableView.isHidden = true
-            infoLabel.isHidden = false
-            timeLabel.isHidden = false
-        } else {
-            contactTableView.reloadData()
-        }
-
-        tokenField.reloadData()
+    func tokenInputViewDidAddToken(_ view: FA_TokenInputView, token theNewToken: FA_Token) {
+        NSLog("new token");
+        selectedContacts.append(theNewToken.baseObject as! Contact)
         updateSendButton()
     }
     
-    func tokenField(_ tokenField: TokenField, didChangeText text: String) {
+    func tokenInputViewDidBeginEditing(_ view: FA_TokenInputView) {
+        searchActive = true
+    }
+    
+    func tokenInputViewDidChangeHeight(_ view: FA_TokenInputView, height newHeight: CGFloat) {
         
-        if text.count == 0 {
+    }
+    
+    func tokenInputViewDidChangeText(_ view: FA_TokenInputView, text theNewText: String) {
+        if theNewText.count == 0 {
             filtered.removeAll()
             filtered = Constants.contacts
             searchActive = false
@@ -377,23 +379,44 @@ extension ContactsViewController: TokenFieldDelegate {
             filtered.removeAll()
             searchActive = true
             for contact in Constants.contacts {
-                let nameRange: NSRange = (contact.firstName! + " " + contact.lastName! as NSString).range(of: text, options: ([.caseInsensitive, .diacriticInsensitive]))
+                let nameRange: NSRange = (contact.firstName! + " " + contact.lastName! as NSString).range(of: theNewText, options: ([.caseInsensitive, .diacriticInsensitive]))
                 if nameRange.location != NSNotFound {
                     filtered.append(contact)
                 }
             }
         }
         contactTableView.reloadData()
+        
     }
     
-    func tokenField(_ tokenField: TokenField, didChangeContentHeight height: CGFloat) {
-        //implement
-        UIView.animate(withDuration: 0.8, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations:{
-            self.tokenFieldHeight.constant = height
-            //self.view.layoutIfNeeded()
-        })
-
+    func tokenInputViewDidEnditing(_ view: FA_TokenInputView) {
+        searchActive = false
+        view.endEditing(true)
     }
+    
+    func tokenInputViewDidRemoveToken(_ view: FA_TokenInputView, token removedToken: FA_Token) {
+        selectedContacts = selectedContacts.filter({$0 != removedToken.baseObject as! Contact})
+        print(selectedContacts)
+        updateSendButton()
+    }
+    
+    func tokenInputViewTokenForText(_ view: FA_TokenInputView, text searchToken: String) -> FA_Token? {
+        return FA_Token(displayText: searchToken, baseObject: searchToken as AnyObject)
+    }
+    
+    func tokenInputViewShouldDisplayMenuItems(_ view: FA_TokenInputView) -> Bool {
+        return true
+    }
+    
+    func tokenInputViewMenuItems(_ view: FA_TokenInputView, token: FA_Token) -> [UIMenuItem] {
+        let menu = UIMenuItem(title: "Copy Email address", action: #selector(ContactsViewController.copyFromMenu(_:)))
+        return [menu]
+    }
+    
+    @objc func copyFromMenu(_ sender: AnyObject) {
+        NSLog("Copy from menu called")
+    }
+    
 }
 
 //sets button fill to blue when pressed
