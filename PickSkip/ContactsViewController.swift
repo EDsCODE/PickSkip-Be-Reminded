@@ -60,8 +60,8 @@ class ContactsViewController: UIViewController {
         toField.tintColor = Constants.defaultBlueColor
         toField.setColors(.black, selectedTextColor: .black, selectedBackgroundColor: Constants.defaultBlueColor)
         toField.fieldName = "To"
-        toField.font = UIFont.systemFont(ofSize: 14.0)
-        toField.fieldNameFont = UIFont.systemFont(ofSize: 13.0)
+        toField.font = UIFont(name: Constants.defaultFont, size: 14.0)
+        toField.fieldNameFont = UIFont(name: Constants.defaultFont, size: 13.0)
         toField.fieldNameColor = UIColor.black
         
         contactTableView = UITableView()
